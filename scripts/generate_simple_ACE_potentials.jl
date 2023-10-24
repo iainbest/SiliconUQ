@@ -1,4 +1,4 @@
-### Check number of Threads
+### Check/print number of Threads
 @show Threads.nthreads()
 
 ### Set observation type
@@ -17,10 +17,6 @@ Bpair = true
 output_potential = false
 
 ### grab all si dataset data (or a selection of it...?)
-### include only configs of certain type(s), e.g.
-# incl = ["dia","vacancy","divacancy","liq","amorph","interstitial"]
-# incl = ["dia","vacancy","divacancy"]
-# incl = ["dia","vacancy"]
 incl = ["dia"]
 
 ### number of configs to keep in random 'split' (e.g. keep 100 random configs out of total)
@@ -34,9 +30,6 @@ output_location = "../potentials/correlation_order_$(corr_order)_$(observation_t
 ### for single potential:
 deg_site_list = [10]
 
-####################################################################################################################################
-######################### SET ABOVE AND CHECK BEFORE CONTINUING ####################################################################
-
 if Bpair
     Bpair_ = 3
 else
@@ -49,6 +42,7 @@ isolated_atom_energy = IPFitting.Data.read_xyz(datapath, energy_key="dft_energy"
 data = IPFitting.Data.read_xyz(datapath, energy_key="dft_energy", force_key="dft_force", virial_key="dft_virial",include=incl);
 
 ### for conformal procedure: split configs into train/calibrate/test.#####################################################
+
 ### collect atomic data indices
 data_idx = collect(1:length(data));
 ### set rng for reproducibility
@@ -80,8 +74,6 @@ CSV.write(string(output_location,"info"),df)
 
 ####################################################################################################################
 
-
-
 ### for each entry in deg_site_list, build an ACE potential
 for deg_site in deg_site_list
 
@@ -102,7 +94,6 @@ for deg_site in deg_site_list
     else
         ### actually build potential
         build_ACE_potential(species,dataset_cfgs,isolated_atom_energy,corr_order,deg_site,output_location,Bpair,output_potential)
-
     end
 
 end
