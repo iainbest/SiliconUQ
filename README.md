@@ -8,7 +8,10 @@ Manifest and Project toml files included for reproducible environment.
 To run scripts etc., need to 
 - use Julia 1.8.3
 - activate this same Julia environment with e.g. `using Pkg; Pkg.activate(".")` in this folder
-- also required is to link this Julia to a Python environment with packages numpy, ASE, matscipy, Julia and pyjulip 
+- also required is to link this Julia to a Python environment with packages numpy, ASE, matscipy, Julia and pyjulip
+- '
+- Until instructions for linking julia to python update, can check bulk modulus script works as intended:
+   - `julia ./scripts/B_increasing_basis.jl` should run and overwrite a simpler version of `./outputs/dia300.csv` (a single potential)
 
 ## Data 
 Silicon 2018 GAP database from: 
