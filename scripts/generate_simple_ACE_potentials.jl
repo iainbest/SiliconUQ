@@ -28,7 +28,7 @@ output_location = "../potentials/correlation_order_$(corr_order)_$(observation_t
 ### Define some degree site list to generate potentials for, e.g.                                          
 # deg_site_list = collect(4:24);
 ### for single potential:
-deg_site_list = [10]
+deg_site_list = [3]
 
 if Bpair
     Bpair_ = 3

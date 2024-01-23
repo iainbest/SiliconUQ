@@ -39,7 +39,7 @@ uses_python = true
 
 ### Set degree of site potential list
 # deg_site_list = collect(3:25)
-deg_site_list = [10]
+deg_site_list = [3]
 
 ### read in isolated atom energy to correct energies in larger configs later
 isolated_atom = IPFitting.Data.read_xyz(datapath, energy_key="dft_energy", force_key="dft_force", 

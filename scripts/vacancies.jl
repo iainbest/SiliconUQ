@@ -37,7 +37,8 @@ end
 uses_python = true
 
 ### Set degree of site potential list, e.g. (make sure potentials have been built!)
-deg_site_list = collect(3:12)
+# deg_site_list = collect(3:12)
+deg_site_list = [3,6,9,12]
 
 ### Set path to info dict (with calib,pred and train indices)
 infopath = string("./potentials/correlation_order_$(corr_order)_$(observation_type)/$(join(incl,"_"))$(k)/")
