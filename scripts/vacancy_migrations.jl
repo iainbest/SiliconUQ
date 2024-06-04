@@ -1,3 +1,23 @@
+using ACE1pack, ACE1, IPFitting
+using Statistics
+using Random
+using LinearAlgebra
+using Distributions
+using Plots
+using StatsPlots
+using CSV, DataFrames
+
+using IB_BayesianLinearRegression
+using UQPotentials
+using ConformalPredictions
+
+### Use code snippets
+include("../code/ACE_fs.jl")
+using .ACE_fs
+
+include("../code/QoIEvaluators.jl")
+using .QoIEvaluators
+
 ### Set path to DFT data xyz file
 datapath = "./data/gp_iter6_sparse9k.xml.xyz"
 
