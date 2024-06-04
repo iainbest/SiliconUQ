@@ -8,8 +8,12 @@ This is organised into an overview of the environment required to run the code, 
 
 Manifest and Project toml files included for reproducible environment.
 
+### Julia Environment
 To run scripts etc., need to:
 - install Julia (all tested on Julia version 1.9.3)
+- add the ACE registry by doing `using Pkg; Pkg.Registry.add(RegistrySpec(url="https://github.com/ACEsuit/ACEregistry"))` in Julia install
+- then activate and instantiate by doing `using Pkg; Pkg.activate("."); Pkg.instantiate()` 
+
 - also required is to link this Julia to a Python environment with the following packages: 
   - numpy,
   - ASE (see https://wiki.fysik.dtu.dk/ase/install.html),
