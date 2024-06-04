@@ -8,6 +8,7 @@ using StatsPlots
 using CSV, DataFrames
 
 using IB_BayesianLinearRegression
+using UQPotentials
 using ConformalPredictions
 
 ### Use code snippets

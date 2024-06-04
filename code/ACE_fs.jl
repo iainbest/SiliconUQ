@@ -2,7 +2,7 @@ module ACE_fs
 
 using ASE, ACE1, JuLIP, IPFitting, ACE1x, ACEfit
 using LinearAlgebra, Distributions, Optim, LineSearches, LatinHypercubeSampling, Polynomials
-using IB_BayesianLinearRegression, ConformalPredictions
+using IB_BayesianLinearRegression, UQPotentials, ConformalPredictions
 using DataFrames, CSV, Plots, PyCall
 using HDF5: h5open, read
 using ProgressMeter
