@@ -19,9 +19,9 @@ function __init__()
     from ase.units import GPa
 
     from ase.optimize import QuasiNewton
-    from ase.neb import NEB
-    from ase.neb import NEBOptimizer
-    from ase.neb import NEBTools
+    from ase.mep import NEB              ### changed from neb -> mep
+    from ase.mep.neb import NEBOptimizer              ### changed from neb -> mep.neb
+    from ase.mep.neb import NEBTools              ### changed from neb -> mep.neb
 
     from ase.io import read
 
@@ -258,13 +258,13 @@ end
 ### python imports and definitions
 ase = pyimport("ase")
 pyimport("ase.optimize")
-pyimport("ase.neb")
+pyimport("ase.mep")              ### changed from neb -> mep
 pyjulip = pyimport("pyjulip")
 
 QuasiNewton = ase.optimize.QuasiNewton
-NEB = ase.neb.NEB
-NEBOptimizer = ase.neb.NEBOptimizer
-NEBTools = ase.neb.NEBTools
+NEB = ase.mep.NEB              ### changed from neb -> mep
+NEBOptimizer = ase.mep.neb.NEBOptimizer              ### changed from neb -> neb.mep
+NEBTools = ase.mep.neb.NEBTools              ### changed from neb -> mep
 
 export bulk_modulus_from_v_and_e_list, bulkmodulus, elasticconstants, vacancyformationenergy, vacancymigration
 export bulkmodulusreduced, elasticconstantsreduced, vacancyformationenergyreduced
@@ -449,6 +449,24 @@ function unpackvacancymigrationoutput(vm_output)
     return obj1,obj2,obj3,obj4,obj5
 end
 
+"""
+    virial_matrix_to_vector(matrix)
+
+Take 3x3 virial stress matrix, return corresponding voigt vector. In matrix notation (row,column), the 
+elements 11,22,33,23,13,12 are contained in the vector, in that order.
+"""
+function virial_matrix_to_vector(matrix::AbstractArray{Float64})
+    
+    @assert size(matrix) == (3,3)
+    
+    m_vector = vec(transpose(matrix))
+    
+    voigt_indices = [1,5,9,6,3,2]
+    
+    voigt_vector = m_vector[voigt_indices]
+    
+    return voigt_vector
+end
 
 """
 get virials, energies and forces for a vector of configs, output in same format as e.g. design matrix, observation vector

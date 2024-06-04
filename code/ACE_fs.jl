@@ -13,13 +13,13 @@ using .QoIEvaluators
 ### python imports and definitions
 ase = pyimport("ase")
 pyimport("ase.optimize")
-pyimport("ase.neb")
+pyimport("ase.mep")              ### changed from neb -> mep
 pyjulip = pyimport("pyjulip")
 
 QuasiNewton = ase.optimize.QuasiNewton
-NEB = ase.neb.NEB
-NEBOptimizer = ase.neb.NEBOptimizer
-NEBTools = ase.neb.NEBTools
+NEB = ase.mep.NEB              ### changed from neb -> mep
+NEBOptimizer = ase.mep.neb.NEBOptimizer              ### changed from neb -> mep.neb
+NEBTools = ase.mep.neb.NEBTools              ### changed from neb -> mep
 
 export build_ACE_potential,basis_lengths,basis_size_bulk_modulus_comparison
 export load_kron
