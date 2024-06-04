@@ -9,18 +9,28 @@ This is organised into an overview of the environment required to run the code, 
 Manifest and Project toml files included for reproducible environment.
 
 To run scripts etc., need to:
-- use Julia 1.8.3
+- install Julia (all tested on Julia version 1.9.3)
 - also required is to link this Julia to a Python environment with the following packages: 
   - numpy,
   - ASE (see https://wiki.fysik.dtu.dk/ase/install.html),
   - matscipy (https://github.com/libAtoms/matscipy , Grigorev, Petr, et al. "matscipy: materials science at the atomic scale with Python." Journal of Open Source Software 9.93 (2024).),
   - PyJulia (https://github.com/JuliaPy/pyjulia), and
   - pyjulip (see https://github.com/casv2/pyjulip for installation instructions)
-- activate this same Julia environment with e.g. `using Pkg; Pkg.activate(".")` in this folder
+
+### Linking Python and Julia installations
+- this is the trickiest part of the setup. Julia, PyCall, PyJulia and pyjulip must be linked to the correct versions of python and Julia. Must use root environment provided by Conda.jl for use of packages with PyCall.
+#### Python setup
+- install the numpy, ase, matscipy and pyjulia packages first. 
+- i.e. in after `julia --project=.` do `import Conda`, `Conda.pip_interop(true)`, then `Conda.pip("install", ["numpy","matscipy","ase","pyjulia"])`
+- then clone the pyjulip package, and do `python setup.py install` in that directory, where `python` uses the Conda root environment 
+- (to find the python executable path, do `import Conda; Conda.ROOTENV` and append 'python').
+#### PyCall
+- `Pkg.add(PackageSpec(name="PyCall", rev="master"))` and then `Pkg.build("PyCall")` to switch to latest version (if not already there)
+- set `ENV["PYTHON"] = "... path of the python executable of root Conda.jl ..."`, then `Pkg.build("PyCall")` again
 
 - As a quick check to verify code is working as intended, can check bulk modulus script by doing:
-   - `julia ./scripts/B_increasing_basis.jl` 
-   - which should run (and overwrite) a simpler version of `./outputs/dia300.csv` (for a single potential)
+   - `julia --project=. ./scripts/B_increasing_basis.jl` 
+   - which should run (and overwrite!) a simpler version of `./outputs/dia300.csv` (for a single potential)
 
 ## Data 
 Silicon 2018 GAP database from: 
@@ -40,7 +50,7 @@ This is done purely for space-saving: larger potentials can be generated (and su
 
 ## Scripts 
 Example scripts to generate outputs for bulk modulus, elastic constants, vacancy formation energies, and vacancy migrations.
-- run from parent folder (e.g. do `julia ./scripts/elastic_constants.jl` for elastic constant calculation(s))
+- run from parent folder (e.g. do `julia --project=. ./scripts/elastic_constants.jl` for elastic constant calculation(s))
 - ensure that required potential files are present in Potentials folder
 - will place results into Outputs folder - either edit scripts or be careful of overwriting!
 
