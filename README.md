@@ -44,12 +44,15 @@ Pkg.add(PackageSpec(name="PyCall", rev="master"))
 ENV["PYTHON"] = joinpath(Conda.PYTHONDIR, "python")
 Pkg.build("PyCall")
 ```
-- switches to latest version of PyCall (if not already there)
-- rebuilds PyCall
+This switches to latest version of PyCall (if not already there) & rebuilds PyCall
 
 As a quick check to verify code is working as intended, can check bulk modulus script by doing:
-   - `julia --project=. ./scripts/B_increasing_basis.jl` 
-   - which should run (and overwrite!) a simpler version of `./outputs/dia300.csv` (for a single potential)
+
+```
+julia --project=. ./scripts/B_increasing_basis.jl
+``` 
+
+Which should run (and overwrite!) a simpler version of `./outputs/dia300.csv` (for a single potential).
 
 ## Data 
 Silicon 2018 GAP database from: 
