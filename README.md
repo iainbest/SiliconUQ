@@ -22,17 +22,32 @@ To run scripts etc., need to:
   - pyjulip (see https://github.com/casv2/pyjulip for installation instructions)
 
 ### Linking Python and Julia installations
-- this is the trickiest part of the setup. Julia, PyCall, PyJulia and pyjulip must be linked to the correct versions of python and Julia. Must use root environment provided by Conda.jl for use of packages with PyCall.
-#### Python setup
-- install the numpy, ase, matscipy and pyjulia packages first. 
-- i.e. in after `julia --project=.` do `import Conda`, `Conda.pip_interop(true)`, then `Conda.pip("install", ["numpy","matscipy","ase","pyjulia"])`
-- then clone the pyjulip package, and do `python setup.py install` in that directory, where `python` uses the Conda root environment 
-- (to find the python executable path, do `import Conda; Conda.ROOTENV` and append 'python').
-#### PyCall
-- `Pkg.add(PackageSpec(name="PyCall", rev="master"))` and then `Pkg.build("PyCall")` to switch to latest version (if not already there)
-- set `ENV["PYTHON"] = "... path of the python executable of root Conda.jl ..."`, then `Pkg.build("PyCall")` again
+This is the trickiest part of the setup. Julia, PyCall, PyJulia and pyjulip must be linked to the correct versions of python and Julia. Must use root environment provided by Conda.jl for use of packages with PyCall.
 
-- As a quick check to verify code is working as intended, can check bulk modulus script by doing:
+#### Python setup 
+- open Julia, `julia --project=.` 
+- then do:
+```
+using Pkg
+ENV["PYTHON] = joinpath(Conda.PYTHONDIR, "python")
+Pkg.build("PyCall")
+
+using Conda
+Conda.pip_interop(true)
+Conda.pip("install", ["numpy","matscipy","ase","julia"])
+Conda.pip("install", "git+https://github.com/casv2/pyjulip")
+```
+#### PyCall setup
+- in the same Julia environment, do
+```
+Pkg.add(PackageSpec(name="PyCall", rev="master"))
+ENV["PYTHON"] = joinpath(Conda.PYTHONDIR, "python")
+Pkg.build("PyCall")
+```
+- switches to latest version of PyCall (if not already there)
+- rebuilds PyCall
+
+As a quick check to verify code is working as intended, can check bulk modulus script by doing:
    - `julia --project=. ./scripts/B_increasing_basis.jl` 
    - which should run (and overwrite!) a simpler version of `./outputs/dia300.csv` (for a single potential)
 
